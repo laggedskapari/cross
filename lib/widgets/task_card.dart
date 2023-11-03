@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:cross/model/task.dart';
 
-class Task extends StatelessWidget {
-  const Task({super.key});
+class TaskCard extends StatelessWidget {
+  const TaskCard({super.key, required this.task});
+
+  final Task task;
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +16,7 @@ class Task extends StatelessWidget {
           Container(
             margin: const EdgeInsets.fromLTRB(20, 0, 0, 0),
             child: Text(
-              '->> restart cross',
+              '${(task.priority == PRIORITY.high) ? '=>>' : (task.priority == PRIORITY.medium) ? '->>' : '->' } ${task.taskTitle}',
               style: Theme.of(context).textTheme.bodyLarge,
             ),
           ),
