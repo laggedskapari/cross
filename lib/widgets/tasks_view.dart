@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:cross/widgets/task_card.dart';
 import 'package:cross/model/task.dart';
+import 'package:cross/widgets/new_task.dart';
 
 class TaskView extends StatelessWidget {
-  const TaskView({super.key, required this.tasks});
+  TaskView({super.key, required this.tasks, required this.isNewTaskVisible});
 
   final List<Task> tasks;
+  bool isNewTaskVisible = true;
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +42,7 @@ class TaskView extends StatelessWidget {
             itemCount: tasks.length,
           ),
         ),
+        NewTask(isVisible: isNewTaskVisible)
       ],
     );
   }

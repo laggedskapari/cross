@@ -43,7 +43,7 @@ class Cross extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: const CrossAppBar(),
-      body: TaskView(tasks: registeredTasks),
+      body: TaskView(tasks: registeredTasks, isNewTaskVisible: true,),
       bottomNavigationBar: const UtilityBelt(),
     );
   }

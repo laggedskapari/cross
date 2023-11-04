@@ -19,14 +19,24 @@ final crossTheme = ThemeData(
       fontSize: 20,
       color: Color.fromARGB(255, 226, 183, 20),
       fontFamily: 'JetBrainsMono',
-      fontWeight: FontWeight.w700,
+    ),
+    bodySmall: TextStyle(
+      fontSize: 20,
+      color: Color.fromARGB(255, 226, 183, 20),
+      fontFamily: 'JetBrainsMono',
+      fontWeight: FontWeight.w900,
     ),
     labelLarge: TextStyle(
       fontSize: 14,
       color: Color.fromARGB(255, 100, 102, 105),
       fontFamily: 'JetBrainsMono',
-      fontWeight: FontWeight.w700,
+      fontWeight: FontWeight.w900,
     ),
+    labelSmall: TextStyle(
+        fontSize: 10,
+        color: Color.fromARGB(255, 100, 102, 105),
+        fontFamily: 'JetBrainsMono',
+        fontWeight: FontWeight.w900),
   ),
 );
 

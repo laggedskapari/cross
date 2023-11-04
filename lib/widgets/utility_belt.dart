@@ -13,7 +13,7 @@ class _UtilityBeltState extends State<UtilityBelt> {
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.secondary,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(20),
       ),
       height: 80,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
@@ -23,26 +23,62 @@ class _UtilityBeltState extends State<UtilityBelt> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('//32 % SUCCESS RATE', style: Theme.of(context).textTheme.labelLarge,),
+              Text(
+                '//32.879 % SUCCESS RATE',
+                style: Theme.of(context).textTheme.labelLarge,
+              ),
               Row(
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('12', style: Theme.of(context).textTheme.bodyLarge,),
-                      Text('//COMPLETED', style: Theme.of(context).textTheme.labelLarge,),
-                    ],
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '12',
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                        Text(
+                          '//COMPLETED',
+                          style: Theme.of(context).textTheme.labelSmall,
+                        ),
+                      ],
+                    ),
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('15', style: Theme.of(context).textTheme.bodyLarge,),
-                      Text('//ABANDONED', style: Theme.of(context).textTheme.labelLarge,),
-                    ],
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          '15',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Color.fromARGB(255, 202, 71, 84),
+                            fontFamily: 'JetBrainsMono',
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                        Text(
+                          '//ABANDONED',
+                          style: Theme.of(context).textTheme.labelSmall,
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               )
             ],
+          ),
+          const Spacer(),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.add,
+              size: 35,
+              weight: 30,
+              color: Color.fromARGB(255, 100, 102, 105),
+            ),
           ),
         ],
       ),
