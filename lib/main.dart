@@ -4,9 +4,9 @@ import 'package:cross/app.dart';
 final crossTheme = ThemeData(
   colorScheme: ColorScheme.fromSeed(
     seedColor: const Color.fromARGB(255, 226, 183, 20),
-    brightness: Brightness.dark,
     primary: const Color.fromARGB(255, 226, 183, 20),
     background: const Color.fromARGB(255, 50, 52, 55),
+    secondary: const Color.fromARGB(255, 44, 46, 49),
   ),
   textTheme: const TextTheme(
     titleLarge: TextStyle(

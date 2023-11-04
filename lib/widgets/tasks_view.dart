@@ -17,15 +17,26 @@ class TaskView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('//NOV 3 2023', style: Theme.of(context).textTheme.labelLarge,),
-              Text('08h 23m left', style: Theme.of(context).textTheme.titleLarge,),
-              Text('//56.99898 completed', style: Theme.of(context).textTheme.labelLarge,),
+              Text(
+                '//NOV 3 2023',
+                style: Theme.of(context).textTheme.labelLarge,
+              ),
+              Text(
+                '08h 23m left',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              Text(
+                '//56.99898 completed',
+                style: Theme.of(context).textTheme.labelLarge,
+              ),
             ],
           ),
         ),
         Expanded(
           child: ListView.builder(
-            itemBuilder: (context, index) => TaskCard(task: tasks[index],),
+            itemBuilder: (context, index) => TaskCard(
+              task: tasks[index],
+            ),
             itemCount: tasks.length,
           ),
         ),
