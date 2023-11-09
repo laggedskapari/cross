@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 
 class UtilityBelt extends StatefulWidget {
-  const UtilityBelt({super.key});
+  const UtilityBelt({super.key, required this.toggleNewTask, required this.isNewTaskVisible});
+
+  final void Function() toggleNewTask;
+  final bool isNewTaskVisible;
 
   @override
   State<UtilityBelt> createState() => _UtilityBeltState();
 }
 
 class _UtilityBeltState extends State<UtilityBelt> {
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -72,12 +76,11 @@ class _UtilityBeltState extends State<UtilityBelt> {
           ),
           const Spacer(),
           IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.add,
-              size: 35,
-              weight: 30,
-              color: Color.fromARGB(255, 100, 102, 105),
+            onPressed: widget.toggleNewTask,
+            icon: Icon(
+              widget.isNewTaskVisible ? Icons.close : Icons.check,
+              size: 25,
+              color: const Color.fromARGB(255, 100, 102, 105),
             ),
           ),
         ],

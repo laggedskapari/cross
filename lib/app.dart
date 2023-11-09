@@ -4,8 +4,22 @@ import 'package:cross/widgets/cross_app_bar.dart';
 import 'package:cross/widgets/tasks_view.dart';
 import 'package:cross/model/task.dart';
 
-class Cross extends StatelessWidget {
+class Cross extends StatefulWidget {
   const Cross({super.key});
+
+  @override
+  State<Cross> createState() => _CrossState();
+}
+
+class _CrossState extends State<Cross> {
+  bool isNewTaskVisible = false;
+
+  void _toggleNewTaskVisible() {
+    setState(() {
+      isNewTaskVisible = !isNewTaskVisible;
+    });
+    print(isNewTaskVisible);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,8 +57,14 @@ class Cross extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: const CrossAppBar(),
-      body: TaskView(tasks: registeredTasks, isNewTaskVisible: true,),
-      bottomNavigationBar: const UtilityBelt(),
+      body: TaskView(
+        tasks: registeredTasks,
+        isNewTaskVisible: isNewTaskVisible,
+      ),
+      bottomNavigationBar: UtilityBelt(
+        toggleNewTask: _toggleNewTaskVisible,
+        isNewTaskVisible: isNewTaskVisible,
+      ),
     );
   }
 }

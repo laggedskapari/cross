@@ -15,6 +15,12 @@ class _NewTaskState extends State<NewTask> {
   PRIORITY? _priority;
 
   @override
+  void dispose(){
+    _titleController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Visibility(
       visible: widget.isVisible,
