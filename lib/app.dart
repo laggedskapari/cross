@@ -21,44 +21,52 @@ class _CrossState extends State<Cross> {
     print(isNewTaskVisible);
   }
 
+  final List<Task> _registeredTasks = [
+    Task(
+        taskTitle: 'restart cross',
+        priority: PRIORITY.high,
+        alertTime: DateTime.now()),
+    Task(
+        taskTitle: 'complete chapter 3',
+        priority: PRIORITY.medium,
+        alertTime: DateTime.now()),
+    Task(
+        taskTitle: 'murder people',
+        priority: PRIORITY.medium,
+        alertTime: DateTime.now()),
+    Task(
+        taskTitle: 'standup meeting',
+        priority: PRIORITY.low,
+        alertTime: DateTime.now()),
+    Task(
+        taskTitle: 'buy coloring book',
+        priority: PRIORITY.high,
+        alertTime: DateTime.now()),
+    Task(
+        taskTitle: 'pay padmini',
+        priority: PRIORITY.medium,
+        alertTime: DateTime.now()),
+    Task(
+        taskTitle: 'buy vegies',
+        priority: PRIORITY.low,
+        alertTime: DateTime.now()),
+  ];
+
+  void _addNewTask(Task newTask){
+    setState(() {
+      _registeredTasks.add(newTask);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final registeredTasks = [
-      Task(
-          taskTitle: 'restart cross',
-          priority: PRIORITY.high,
-          alertTime: DateTime.now()),
-      Task(
-          taskTitle: 'complete chapter 3',
-          priority: PRIORITY.medium,
-          alertTime: DateTime.now()),
-      Task(
-          taskTitle: 'murder people',
-          priority: PRIORITY.medium,
-          alertTime: DateTime.now()),
-      Task(
-          taskTitle: 'standup meeting',
-          priority: PRIORITY.low,
-          alertTime: DateTime.now()),
-      Task(
-          taskTitle: 'buy coloring book',
-          priority: PRIORITY.high,
-          alertTime: DateTime.now()),
-      Task(
-          taskTitle: 'pay padmini',
-          priority: PRIORITY.medium,
-          alertTime: DateTime.now()),
-      Task(
-          taskTitle: 'buy vegies',
-          priority: PRIORITY.low,
-          alertTime: DateTime.now()),
-    ];
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: const CrossAppBar(),
       body: TaskView(
-        tasks: registeredTasks,
+        addNewTask: _addNewTask,
+        registeredTasks: _registeredTasks,
         isNewTaskVisible: isNewTaskVisible,
       ),
       bottomNavigationBar: UtilityBelt(

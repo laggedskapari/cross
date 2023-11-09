@@ -42,7 +42,7 @@ final crossTheme = ThemeData(
 
 void main() => runApp(
       MaterialApp(
-        home: const Cross(),
+        home: Cross(),
         theme: crossTheme,
       ),
     );

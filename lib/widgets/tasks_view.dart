@@ -4,10 +4,16 @@ import 'package:cross/model/task.dart';
 import 'package:cross/widgets/new_task.dart';
 
 class TaskView extends StatelessWidget {
-  TaskView({super.key, required this.tasks, required this.isNewTaskVisible});
+  const TaskView({
+    super.key,
+    required this.registeredTasks,
+    required this.isNewTaskVisible,
+    required this.addNewTask,
+  });
 
-  final List<Task> tasks;
-  bool isNewTaskVisible = true;
+  final void Function(Task newTask) addNewTask;
+  final List<Task> registeredTasks;
+  final bool isNewTaskVisible;
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +43,16 @@ class TaskView extends StatelessWidget {
         Expanded(
           child: ListView.builder(
             itemBuilder: (context, index) => TaskCard(
-              task: tasks[index],
+              task: registeredTasks[index],
             ),
-            itemCount: tasks.length,
+            itemCount: registeredTasks.length,
           ),
         ),
-        NewTask(isVisible: isNewTaskVisible)
+        NewTask(
+          addNewTask: addNewTask,
+          isVisible: isNewTaskVisible,
+          registeredTasksList: registeredTasks,
+        ),
       ],
     );
   }

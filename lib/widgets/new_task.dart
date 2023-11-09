@@ -2,9 +2,16 @@ import 'package:cross/model/task.dart';
 import 'package:flutter/material.dart';
 
 class NewTask extends StatefulWidget {
-  const NewTask({super.key, required this.isVisible});
+  const NewTask({
+    super.key,
+    required this.isVisible,
+    required this.registeredTasksList,
+    required this.addNewTask
+  });
 
+  final void Function(Task newTask) addNewTask;
   final bool isVisible;
+  final List<Task> registeredTasksList;
 
   @override
   State<NewTask> createState() => _NewTaskState();
@@ -12,12 +19,16 @@ class NewTask extends StatefulWidget {
 
 class _NewTaskState extends State<NewTask> {
   final _titleController = TextEditingController();
-  PRIORITY? _priority;
+  PRIORITY _priority = PRIORITY.low;
 
   @override
-  void dispose(){
+  void dispose() {
     _titleController.dispose();
     super.dispose();
+  }
+
+  void _submitNewTask() {
+    widget.addNewTask(Task(taskTitle: _titleController.text, priority: _priority, alertTime: DateTime.now()));
   }
 
   @override
@@ -61,9 +72,13 @@ class _NewTaskState extends State<NewTask> {
                     }
                     setState(() {
                       _priority = value;
+                      print(_priority);
                     });
                   },
-                  hint: Text('//PRIORITY', style: Theme.of(context).textTheme.labelLarge,),
+                  hint: Text(
+                    '//PRIORITY',
+                    style: Theme.of(context).textTheme.labelLarge,
+                  ),
                   dropdownColor: Theme.of(context).colorScheme.background,
                   borderRadius: BorderRadius.circular(10),
                   items: PRIORITY.values
@@ -90,7 +105,7 @@ class _NewTaskState extends State<NewTask> {
             Container(
               margin: const EdgeInsets.fromLTRB(0, 0, 5, 0),
               child: IconButton(
-                onPressed: () {},
+                onPressed: _submitNewTask,
                 icon: const Icon(Icons.check),
                 splashRadius: 1,
                 color: const Color.fromARGB(255, 100, 102, 105),
