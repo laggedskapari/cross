@@ -18,7 +18,6 @@ class _CrossState extends State<Cross> {
     setState(() {
       isNewTaskVisible = !isNewTaskVisible;
     });
-    print(isNewTaskVisible);
   }
 
   final List<Task> _registeredTasks = [
