@@ -78,7 +78,7 @@ class _UtilityBeltState extends State<UtilityBelt> {
           IconButton(
             onPressed: widget.toggleNewTask,
             icon: Icon(
-              widget.isNewTaskVisible ? Icons.close : Icons.check,
+              widget.isNewTaskVisible ? Icons.close : Icons.add,
               size: 25,
               color: const Color.fromARGB(255, 100, 102, 105),
             ),
