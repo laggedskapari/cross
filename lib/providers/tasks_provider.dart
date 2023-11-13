@@ -14,6 +14,22 @@ class TasksNotifier extends StateNotifier<List<Task>> {
       state = [...state, newTask];
     }
   }
+
+  void crossTask(Task task){
+    final isTaskPresent = state.contains(task);
+
+    if(isTaskPresent){
+      task.isCompleted = true;
+    }
+  }
+
+  void uncrossTask(Task task){
+    final isTaskPresent = state.contains(task);
+
+    if(isTaskPresent){
+      task.isCompleted = false;
+    }
+  }
 }
 
 final taskProvider = StateNotifierProvider<TasksNotifier, List<Task>>((ref) {

@@ -12,7 +12,7 @@ class Task {
   final String id;
   final String taskTitle;
   final PRIORITY priority;
-  final DateTime alertTime;
+  bool isCompleted;
 
-  Task({ required this.taskTitle, required this.priority, required this.alertTime }) : id = uuid.v4();
+  Task({ required this.taskTitle, required this.priority, this.isCompleted = false }) : id = uuid.v4();
 }

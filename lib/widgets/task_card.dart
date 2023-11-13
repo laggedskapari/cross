@@ -1,17 +1,19 @@
+import 'package:cross/providers/tasks_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:cross/model/task.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class TaskCard extends StatefulWidget {
-  TaskCard({super.key, required this.task, required this.isTaskCompleted});
+class TaskCard extends ConsumerStatefulWidget {
+  const TaskCard({super.key, required this.task});
 
   final Task task;
-  bool isTaskCompleted = false;
 
   @override
-  State<TaskCard> createState() => _TaskCardState();
+  ConsumerState<TaskCard> createState() => _TaskCardState();
 }
 
-class _TaskCardState extends State<TaskCard> {
+class _TaskCardState extends ConsumerState<TaskCard> {
+
   double initialOffset = 0.0;
 
   @override
@@ -26,7 +28,7 @@ class _TaskCardState extends State<TaskCard> {
             child: GestureDetector(
               onDoubleTap: (){
                 setState(() {
-                  widget.isTaskCompleted = false;
+                  ref.read(taskProvider.notifier).uncrossTask(widget.task);
                 });
               },
               onHorizontalDragStart: (DragStartDetails details) {
@@ -35,7 +37,7 @@ class _TaskCardState extends State<TaskCard> {
               onHorizontalDragUpdate: (DragUpdateDetails details) {
                 if (details.globalPosition.dx - initialOffset > 100) {
                   setState(() {
-                    widget.isTaskCompleted = true;
+                    ref.read(taskProvider.notifier).crossTask(widget.task);
                   });
                 }
               },
@@ -43,7 +45,7 @@ class _TaskCardState extends State<TaskCard> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
-                    child: Icon((widget.isTaskCompleted) ? Icons.done_all_rounded : (widget.task.priority == PRIORITY.high) ? Icons.label_important : (widget.task.priority == PRIORITY.medium) ? Icons.double_arrow : Icons.arrow_forward_ios, color: (widget.isTaskCompleted)
+                    child: Icon((widget.task.isCompleted) ? Icons.done_all_rounded : (widget.task.priority == PRIORITY.high) ? Icons.label_important : (widget.task.priority == PRIORITY.medium) ? Icons.double_arrow : Icons.arrow_forward_ios, color: (widget.task.isCompleted)
                         ? const Color.fromARGB(255, 100, 102, 105)
                         : (widget.task.priority == PRIORITY.high)
                         ? const Color.fromARGB(255, 226, 183, 20)
@@ -57,14 +59,14 @@ class _TaskCardState extends State<TaskCard> {
                       fontFamily: 'JetBrainsMono',
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
-                      color: (widget.isTaskCompleted)
+                      color: (widget.task.isCompleted)
                           ? const Color.fromARGB(255, 100, 102, 105)
                           : (widget.task.priority == PRIORITY.high)
                               ? const Color.fromARGB(255, 226, 183, 20)
                               : (widget.task.priority == PRIORITY.medium)
                                   ? const Color.fromARGB(155, 226, 183, 20)
                                   : const Color.fromARGB(100, 226, 183, 20),
-                      decoration: widget.isTaskCompleted
+                      decoration: widget.task.isCompleted
                           ? TextDecoration.lineThrough
                           : TextDecoration.none,
                     ),

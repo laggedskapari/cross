@@ -43,7 +43,6 @@ class TaskView extends StatelessWidget {
           child: ListView.builder(
             itemBuilder: (context, index) => TaskCard(
               task: registeredTasks[index],
-              isTaskCompleted: false,
             ),
             itemCount: registeredTasks.length,
           ),

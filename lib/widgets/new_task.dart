@@ -58,16 +58,8 @@ class _NewTaskState extends ConsumerState<NewTask> {
           Task(
             taskTitle: _titleController.text.trim(),
             priority: _priority!,
-            alertTime: DateTime.now(),
           ),
         );
-    // ref.addNewTask(
-    //   Task(
-    //     taskTitle: _titleController.text,
-    //     priority: _priority!,
-    //     alertTime: DateTime.now(),
-    //   ),
-    // );
   }
 
   @override
