@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class UtilityBelt extends StatefulWidget {
+
   const UtilityBelt({super.key, required this.toggleNewTask, required this.isNewTaskVisible});
 
   final void Function() toggleNewTask;

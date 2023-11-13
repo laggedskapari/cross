@@ -4,14 +4,13 @@ import 'package:cross/model/task.dart';
 import 'package:cross/widgets/new_task.dart';
 
 class TaskView extends StatelessWidget {
+
   const TaskView({
     super.key,
     required this.registeredTasks,
     required this.isNewTaskVisible,
-    required this.addNewTask,
   });
 
-  final void Function(Task newTask) addNewTask;
   final List<Task> registeredTasks;
   final bool isNewTaskVisible;
 
@@ -50,7 +49,6 @@ class TaskView extends StatelessWidget {
           ),
         ),
         NewTask(
-          addNewTask: addNewTask,
           isVisible: isNewTaskVisible,
           registeredTasksList: registeredTasks,
         ),

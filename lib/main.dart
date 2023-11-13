@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:cross/app.dart';
+import 'package:cross/cross.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final crossTheme = ThemeData(
   colorScheme: ColorScheme.fromSeed(
@@ -40,9 +41,12 @@ final crossTheme = ThemeData(
   ),
 );
 
+
 void main() => runApp(
-      MaterialApp(
-        home: Cross(),
-        theme: crossTheme,
+      ProviderScope(
+        child: MaterialApp(
+          home: const Cross(),
+          theme: crossTheme,
+        ),
       ),
     );

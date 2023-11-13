@@ -1,23 +1,23 @@
 import 'package:cross/model/task.dart';
+import 'package:cross/providers/tasks_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+class NewTask extends ConsumerStatefulWidget {
+  const NewTask({
+    super.key,
+    required this.isVisible,
+    required this.registeredTasksList,
+  });
 
-class NewTask extends StatefulWidget {
-  const NewTask(
-      {super.key,
-      required this.isVisible,
-      required this.registeredTasksList,
-      required this.addNewTask});
-
-  final void Function(Task newTask) addNewTask;
   final bool isVisible;
   final List<Task> registeredTasksList;
 
   @override
-  State<NewTask> createState() => _NewTaskState();
+  ConsumerState<NewTask> createState() => _NewTaskState();
 }
 
-class _NewTaskState extends State<NewTask> {
+class _NewTaskState extends ConsumerState<NewTask> {
   bool _showErrorText = false;
   bool _showErrorPriority = false;
   final _titleController = TextEditingController();
@@ -33,7 +33,6 @@ class _NewTaskState extends State<NewTask> {
     if (_titleController.text.trim().isEmpty && _priority == null) {
       setState(() {
         _showErrorText = true;
-        print('hoja');
       });
       Future.delayed(const Duration(seconds: 2)).then((_) {
         setState(() {
@@ -54,13 +53,21 @@ class _NewTaskState extends State<NewTask> {
       });
       return;
     }
-    widget.addNewTask(
-      Task(
-        taskTitle: _titleController.text,
-        priority: _priority!,
-        alertTime: DateTime.now(),
-      ),
-    );
+
+    ref.read(taskProvider.notifier).addNewTask(
+          Task(
+            taskTitle: _titleController.text.trim(),
+            priority: _priority!,
+            alertTime: DateTime.now(),
+          ),
+        );
+    // ref.addNewTask(
+    //   Task(
+    //     taskTitle: _titleController.text,
+    //     priority: _priority!,
+    //     alertTime: DateTime.now(),
+    //   ),
+    // );
   }
 
   @override
@@ -79,7 +86,11 @@ class _NewTaskState extends State<NewTask> {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Text(
-                _showErrorPriority ? '//PRIORITY NOT FOUND!' : _showErrorText ? '//TITLE NOT FOUND' : '',
+                _showErrorPriority
+                    ? '//PRIORITY NOT FOUND!'
+                    : _showErrorText
+                        ? '//TITLE NOT FOUND'
+                        : '',
                 style: TextStyle(
                     color: Theme.of(context).colorScheme.error,
                     fontWeight: FontWeight.w900,
