@@ -28,7 +28,7 @@ class _TaskCardState extends ConsumerState<TaskCard> {
             child: GestureDetector(
               onDoubleTap: (){
                 setState(() {
-                  ref.read(taskProvider.notifier).uncrossTask(widget.task);
+                  ref.read(taskProvider.notifier).unCrossTask(widget.task);
                 });
               },
               onHorizontalDragStart: (DragStartDetails details) {

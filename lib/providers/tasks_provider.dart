@@ -1,37 +1,29 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'package:cross/model/task.dart';
 
-
-
-class TasksNotifier extends StateNotifier<List<Task>> {
-  TasksNotifier() : super([]);
+class TaskProvider extends Notifier<List<Task>>{
+  @override
+  List<Task> build() {
+    return [];
+  }
 
   void addNewTask(Task newTask){
-    final isTaskPresent = state.contains(newTask);
-
-    if(!isTaskPresent){
-      state = [...state, newTask];
-    }
+    state = [...state, newTask];
   }
 
   void crossTask(Task task){
-    final isTaskPresent = state.contains(task);
-
-    if(isTaskPresent){
-      task.isCompleted = true;
+    if(!task.isCompleted){
+      task.isCompleted = !task.isCompleted;
     }
   }
 
-  void uncrossTask(Task task){
-    final isTaskPresent = state.contains(task);
-
-    if(isTaskPresent){
-      task.isCompleted = false;
+  void unCrossTask(Task task){
+    if(task.isCompleted){
+      task.isCompleted = !task.isCompleted;
     }
   }
 }
 
-final taskProvider = StateNotifierProvider<TasksNotifier, List<Task>>((ref) {
-  return TasksNotifier();
-});
+final taskProvider = NotifierProvider<TaskProvider, List<Task>>(TaskProvider.new);
