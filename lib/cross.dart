@@ -4,8 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cross/widgets/utility_belt.dart';
 import 'package:cross/widgets/cross_app_bar.dart';
 import 'package:cross/widgets/tasks_view.dart';
-import 'package:cross/model/task.dart';
-import 'package:cross/providers/tasks_provider.dart';
+import 'package:cross/providers/providers.dart';
 
 class Cross extends ConsumerStatefulWidget {
   const Cross({super.key});
@@ -17,6 +16,13 @@ class Cross extends ConsumerStatefulWidget {
 class _CrossState extends ConsumerState<Cross> {
   bool isNewTaskVisible = false;
 
+  @override
+  void initState(){
+    super.initState();
+    ref.read(tasksProvider.notifier).loadTasks();
+  }
+
+
   //Handles the visibility of the new task widget.
   void _toggleNewTaskVisible() {
     setState(() {
@@ -27,7 +33,7 @@ class _CrossState extends ConsumerState<Cross> {
   @override
   Widget build(BuildContext context) {
 
-    final allRegisteredTasks = ref.watch(taskProvider);
+    final allRegisteredTasks = ref.watch(allTasksProvider);
     
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,

@@ -1,5 +1,5 @@
-import 'package:cross/model/task.dart';
-import 'package:cross/providers/tasks_provider.dart';
+import 'package:cross/domain/entities/task.dart';
+import 'package:cross/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -19,9 +19,7 @@ class NewTask extends ConsumerStatefulWidget {
 
 class _NewTaskState extends ConsumerState<NewTask> {
   bool _showErrorText = false;
-  bool _showErrorPriority = false;
   final _titleController = TextEditingController();
-  PRIORITY? _priority;
 
   @override
   void dispose() {
@@ -30,7 +28,7 @@ class _NewTaskState extends ConsumerState<NewTask> {
   }
 
   void _submitNewTask() {
-    if (_titleController.text.trim().isEmpty && _priority == null) {
+    if (_titleController.text.trim().isEmpty) {
       setState(() {
         _showErrorText = true;
       });
@@ -42,24 +40,7 @@ class _NewTaskState extends ConsumerState<NewTask> {
       return;
     }
 
-    if (_priority == null) {
-      setState(() {
-        _showErrorPriority = true;
-      });
-      Future.delayed(const Duration(seconds: 2)).then((_) {
-        setState(() {
-          _showErrorPriority = false;
-        });
-      });
-      return;
-    }
-
-    ref.read(taskProvider.notifier).addNewTask(
-          Task(
-            taskTitle: _titleController.text.trim(),
-            priority: _priority!,
-          ),
-        );
+    ref.read(tasksProvider.notifier).addTask(title: _titleController.text.trim());
   }
 
   @override
@@ -69,7 +50,7 @@ class _NewTaskState extends ConsumerState<NewTask> {
       child: Column(
         children: [
           Visibility(
-            visible: _showErrorPriority || _showErrorText,
+            visible: _showErrorText,
             child: Container(
               margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -77,12 +58,7 @@ class _NewTaskState extends ConsumerState<NewTask> {
                 color: Theme.of(context).colorScheme.secondary,
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Text(
-                _showErrorPriority
-                    ? '//PRIORITY NOT FOUND!'
-                    : _showErrorText
-                        ? '//TITLE NOT FOUND'
-                        : '',
+              child: Text('//TITLE NOT FOUND!',
                 style: TextStyle(
                     color: Theme.of(context).colorScheme.error,
                     fontWeight: FontWeight.w900,
@@ -110,50 +86,6 @@ class _NewTaskState extends ConsumerState<NewTask> {
                         hintStyle: Theme.of(context).textTheme.labelLarge,
                         border: InputBorder.none,
                       ),
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.fromLTRB(0, 0, 50, 0),
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton(
-                      isDense: false,
-                      iconSize: 0,
-                      value: _priority,
-                      onChanged: (value) {
-                        if (value == null) {
-                          return;
-                        }
-                        setState(() {
-                          _priority = value;
-                        });
-                      },
-                      hint: Text(
-                        '//PRIORITY',
-                        style: Theme.of(context).textTheme.labelLarge,
-                      ),
-                      dropdownColor: Theme.of(context).colorScheme.background,
-                      borderRadius: BorderRadius.circular(10),
-                      items: PRIORITY.values
-                          .map(
-                            (type) => DropdownMenuItem(
-                              value: type,
-                              child: Text(
-                                type.name,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  color: (type == PRIORITY.high)
-                                      ? const Color.fromARGB(255, 226, 183, 20)
-                                      : (type == PRIORITY.medium)
-                                          ? const Color.fromARGB(
-                                              155, 226, 183, 20)
-                                          : const Color.fromARGB(
-                                              100, 226, 183, 20),
-                                ),
-                              ),
-                            ),
-                          )
-                          .toList(),
                     ),
                   ),
                 ),

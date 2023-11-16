@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cross/widgets/task_card.dart';
-import 'package:cross/model/task.dart';
+import 'package:cross/domain/entities/task.dart';
 import 'package:cross/widgets/new_task.dart';
 
 class TaskView extends StatelessWidget {

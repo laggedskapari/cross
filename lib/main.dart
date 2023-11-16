@@ -45,6 +45,7 @@ final crossTheme = ThemeData(
 void main() => runApp(
       ProviderScope(
         child: MaterialApp(
+          debugShowCheckedModeBanner: false,
           home: const Cross(),
           theme: crossTheme,
         ),

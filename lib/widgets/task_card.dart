@@ -1,6 +1,6 @@
-import 'package:cross/providers/tasks_provider.dart';
+import 'package:cross/providers/providers.dart';
 import 'package:flutter/material.dart';
-import 'package:cross/model/task.dart';
+import 'package:cross/domain/entities/task.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class TaskCard extends ConsumerStatefulWidget {
@@ -13,7 +13,6 @@ class TaskCard extends ConsumerStatefulWidget {
 }
 
 class _TaskCardState extends ConsumerState<TaskCard> {
-
   double initialOffset = 0.0;
 
   @override
@@ -26,9 +25,9 @@ class _TaskCardState extends ConsumerState<TaskCard> {
           Container(
             margin: const EdgeInsets.fromLTRB(20, 0, 0, 0),
             child: GestureDetector(
-              onDoubleTap: (){
+              onDoubleTap: () {
                 setState(() {
-                  ref.read(taskProvider.notifier).unCrossTask(widget.task);
+                  ref.read(tasksProvider.notifier).unCrossTask(widget.task.id);
                 });
               },
               onHorizontalDragStart: (DragStartDetails details) {
@@ -37,7 +36,7 @@ class _TaskCardState extends ConsumerState<TaskCard> {
               onHorizontalDragUpdate: (DragUpdateDetails details) {
                 if (details.globalPosition.dx - initialOffset > 100) {
                   setState(() {
-                    ref.read(taskProvider.notifier).crossTask(widget.task);
+                    ref.read(tasksProvider.notifier).crossTask(widget.task.id);
                   });
                 }
               },
@@ -45,27 +44,26 @@ class _TaskCardState extends ConsumerState<TaskCard> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
-                    child: Icon((widget.task.isCompleted) ? Icons.done_all_rounded : (widget.task.priority == PRIORITY.high) ? Icons.label_important : (widget.task.priority == PRIORITY.medium) ? Icons.double_arrow : Icons.arrow_forward_ios, color: (widget.task.isCompleted)
-                        ? const Color.fromARGB(255, 100, 102, 105)
-                        : (widget.task.priority == PRIORITY.high)
-                        ? const Color.fromARGB(255, 226, 183, 20)
-                        : (widget.task.priority == PRIORITY.medium)
-                        ? const Color.fromARGB(155, 226, 183, 20)
-                        : const Color.fromARGB(100, 226, 183, 20),),
+                    child: Icon(
+                      (widget.task.isCompleted)
+                          ? Icons.done_all_rounded
+                          : (widget.task.isImportant)
+                              ? Icons.label_important
+                              : Icons.double_arrow,
+                      color: (widget.task.isCompleted)
+                          ? const Color.fromARGB(255, 100, 102, 105)
+                          : const Color.fromARGB(255, 226, 183, 20),
+                    ),
                   ),
                   Text(
-                    widget.task.taskTitle,
+                    widget.task.title,
                     style: TextStyle(
                       fontFamily: 'JetBrainsMono',
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
                       color: (widget.task.isCompleted)
                           ? const Color.fromARGB(255, 100, 102, 105)
-                          : (widget.task.priority == PRIORITY.high)
-                              ? const Color.fromARGB(255, 226, 183, 20)
-                              : (widget.task.priority == PRIORITY.medium)
-                                  ? const Color.fromARGB(155, 226, 183, 20)
-                                  : const Color.fromARGB(100, 226, 183, 20),
+                          : const Color.fromARGB(255, 226, 183, 20),
                       decoration: widget.task.isCompleted
                           ? TextDecoration.lineThrough
                           : TextDecoration.none,
