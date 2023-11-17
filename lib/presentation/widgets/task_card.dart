@@ -1,8 +1,8 @@
 import 'package:cross/presentation/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:cross/domain/entities/task.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class TaskCard extends ConsumerStatefulWidget {
   const TaskCard({super.key, required this.task});
@@ -27,10 +27,12 @@ class _TaskCardState extends ConsumerState<TaskCard> {
             margin: const EdgeInsets.fromLTRB(20, 0, 0, 0),
             child: GestureDetector(
               onDoubleTap: () {
-                setState(() {
-                  ref.read(tasksProvider.notifier).unCrossTask(widget.task.id);
-                  HapticFeedback.lightImpact();
-                });
+                if(widget.task.isCompleted){
+                  setState(() {
+                    ref.read(tasksProvider.notifier).unCrossTask(widget.task.id);
+                    HapticFeedback.lightImpact();
+                  });
+                }
               },
               onHorizontalDragStart: (DragStartDetails details) {
                 initialOffset = details.globalPosition.dx;
@@ -39,6 +41,7 @@ class _TaskCardState extends ConsumerState<TaskCard> {
                 if (details.globalPosition.dx - initialOffset > 100 && !widget.task.isCompleted) {
                   setState(() {
                     ref.read(tasksProvider.notifier).crossTask(widget.task.id);
+                    HapticFeedback.heavyImpact();
                   });
                 }
               },

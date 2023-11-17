@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class DayTimeInsight extends  StatefulWidget {
   const DayTimeInsight({super.key});
@@ -11,6 +12,7 @@ class DayTimeInsight extends  StatefulWidget {
 class _DayTimeInsightState extends State<DayTimeInsight> {
   late Timer timer;
   late DateTime _endTime;
+  double _percentComplete = 0.0;
 
   @override
   void initState(){
@@ -26,7 +28,11 @@ class _DayTimeInsightState extends State<DayTimeInsight> {
         _resetTimer();
       } else {
         Duration remaining = _endTime.difference(now);
-        setState(() {});
+        Duration total = _endTime.difference(_endTime.subtract(const Duration(days: 1)));
+        setState(() {
+          _percentComplete = ((total - remaining).inSeconds / total.inSeconds) * 100;
+          _percentComplete = double.parse(_percentComplete.toStringAsFixed(6));
+        });
       }
     });
   }
@@ -60,7 +66,7 @@ class _DayTimeInsightState extends State<DayTimeInsight> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '//NOV 3 2023',
+            '//${DateFormat('E MMM d yyyy').format(now).toString().toUpperCase()}',
             style: Theme.of(context).textTheme.labelLarge,
           ),
           Text(
@@ -68,7 +74,7 @@ class _DayTimeInsightState extends State<DayTimeInsight> {
             style: Theme.of(context).textTheme.titleLarge,
           ),
           Text(
-            '//56.99898 completed',
+            '//$_percentComplete % COMPLETED',
             style: Theme.of(context).textTheme.labelLarge,
           ),
         ],
