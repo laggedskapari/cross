@@ -24,12 +24,25 @@ class _TaskCardState extends ConsumerState<TaskCard> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            margin: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            margin: const EdgeInsets.fromLTRB(20, 0, 10, 0),
             child: GestureDetector(
+              onLongPress: () {
+                setState(() {
+                  if(!widget.task.isCompleted){
+                    widget.task.isImportant = !widget.task.isImportant;
+                    HapticFeedback.vibrate();
+                  }
+                });
+              },
               onDoubleTap: () {
-                if(widget.task.isCompleted){
+                if (widget.task.isCompleted) {
                   setState(() {
-                    ref.read(tasksProvider.notifier).unCrossTask(widget.task.id);
+                    ref
+                        .read(tasksProvider.notifier)
+                        .unCrossTask(widget.task.id);
                     HapticFeedback.lightImpact();
                   });
                 }
@@ -38,7 +51,8 @@ class _TaskCardState extends ConsumerState<TaskCard> {
                 initialOffset = details.globalPosition.dx;
               },
               onHorizontalDragUpdate: (DragUpdateDetails details) {
-                if (details.globalPosition.dx - initialOffset > 100 && !widget.task.isCompleted) {
+                if (details.globalPosition.dx - initialOffset > 100 &&
+                    !widget.task.isCompleted) {
                   setState(() {
                     ref.read(tasksProvider.notifier).crossTask(widget.task.id);
                     HapticFeedback.heavyImpact();
