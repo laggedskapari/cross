@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:cross/widgets/utility_belt.dart';
-import 'package:cross/widgets/cross_app_bar.dart';
-import 'package:cross/widgets/tasks_view.dart';
-import 'package:cross/providers/providers.dart';
+import 'package:cross/presentation/widgets/utility_belt.dart';
+import 'package:cross/presentation/widgets/cross_app_bar.dart';
+import 'package:cross/presentation/widgets/tasks_view.dart';
+import 'package:cross/presentation/providers/providers.dart';
 
 class Cross extends ConsumerStatefulWidget {
   const Cross({super.key});

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:cross/cross.dart';
+import 'package:cross/presentation/cross.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final crossTheme = ThemeData(

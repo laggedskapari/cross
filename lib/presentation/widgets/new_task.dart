@@ -1,5 +1,4 @@
-import 'package:cross/domain/entities/task.dart';
-import 'package:cross/providers/providers.dart';
+import 'package:cross/presentation/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -7,11 +6,9 @@ class NewTask extends ConsumerStatefulWidget {
   const NewTask({
     super.key,
     required this.isVisible,
-    required this.registeredTasksList,
   });
 
   final bool isVisible;
-  final List<Task> registeredTasksList;
 
   @override
   ConsumerState<NewTask> createState() => _NewTaskState();
@@ -27,24 +24,28 @@ class _NewTaskState extends ConsumerState<NewTask> {
     super.dispose();
   }
 
-  void _submitNewTask() {
-    if (_titleController.text.trim().isEmpty) {
-      setState(() {
-        _showErrorText = true;
-      });
-      Future.delayed(const Duration(seconds: 2)).then((_) {
-        setState(() {
-          _showErrorText = false;
-        });
-      });
-      return;
-    }
-
-    ref.read(tasksProvider.notifier).addTask(title: _titleController.text.trim());
-  }
-
   @override
   Widget build(BuildContext context) {
+
+    void submitNewTask() {
+      if (_titleController.text.trim().isEmpty) {
+        setState(() {
+          _showErrorText = true;
+        });
+        Future.delayed(const Duration(seconds: 2)).then((_) {
+          setState(() {
+            _showErrorText = false;
+          });
+        });
+        return;
+      }
+
+      ref.read(tasksProvider.notifier).addTask(title: _titleController.text.trim());
+      setState(() {
+        _titleController.text = '';
+      });
+    }
+
     return Visibility(
       visible: widget.isVisible,
       child: Column(
@@ -92,7 +93,7 @@ class _NewTaskState extends ConsumerState<NewTask> {
                 Container(
                   margin: const EdgeInsets.fromLTRB(0, 0, 5, 0),
                   child: IconButton(
-                    onPressed: _submitNewTask,
+                    onPressed: submitNewTask,
                     icon: const Icon(Icons.check),
                     splashRadius: 1,
                     color: const Color.fromARGB(255, 100, 102, 105),
