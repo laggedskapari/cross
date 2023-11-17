@@ -1,5 +1,6 @@
 import 'package:cross/presentation/providers/providers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class NewTask extends ConsumerStatefulWidget {
@@ -26,7 +27,6 @@ class _NewTaskState extends ConsumerState<NewTask> {
 
   @override
   Widget build(BuildContext context) {
-
     void submitNewTask() {
       if (_titleController.text.trim().isEmpty) {
         setState(() {
@@ -40,7 +40,9 @@ class _NewTaskState extends ConsumerState<NewTask> {
         return;
       }
 
-      ref.read(tasksProvider.notifier).addTask(title: _titleController.text.trim());
+      ref
+          .read(tasksProvider.notifier)
+          .addTask(title: _titleController.text.trim());
       setState(() {
         _titleController.text = '';
       });
@@ -54,12 +56,13 @@ class _NewTaskState extends ConsumerState<NewTask> {
             visible: _showErrorText,
             child: Container(
               margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.secondary,
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Text('//TITLE NOT FOUND!',
+              child: Text(
+                '//TITLE NOT FOUND!',
                 style: TextStyle(
                     color: Theme.of(context).colorScheme.error,
                     fontWeight: FontWeight.w900,
@@ -78,11 +81,14 @@ class _NewTaskState extends ConsumerState<NewTask> {
               children: [
                 Expanded(
                   child: Container(
-                    margin: const EdgeInsets.fromLTRB(0, 0, 5, 0),
+                    margin: const EdgeInsets.fromLTRB(0, 5, 5, 0),
                     child: TextField(
+                      maxLines: 1,
+                      maxLength: 30,
                       controller: _titleController,
-                      style: Theme.of(context).textTheme.bodyLarge,
+                      style: Theme.of(context).textTheme.bodySmall,
                       decoration: InputDecoration(
+                        counter: const Offstage(),
                         hintText: '//TITLE',
                         hintStyle: Theme.of(context).textTheme.labelLarge,
                         border: InputBorder.none,

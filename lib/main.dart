@@ -28,7 +28,7 @@ final crossTheme = ThemeData(
       fontWeight: FontWeight.w900,
     ),
     labelLarge: TextStyle(
-      fontSize: 14,
+      fontSize: 15,
       color: Color.fromARGB(255, 100, 102, 105),
       fontFamily: 'JetBrainsMono',
       fontWeight: FontWeight.w900,

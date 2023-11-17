@@ -60,18 +60,21 @@ class _TaskCardState extends ConsumerState<TaskCard> {
                           : const Color.fromARGB(255, 226, 183, 20),
                     ),
                   ),
-                  Text(
-                    widget.task.title,
-                    style: TextStyle(
-                      fontFamily: 'JetBrainsMono',
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      color: (widget.task.isCompleted)
-                          ? const Color.fromARGB(255, 100, 102, 105)
-                          : const Color.fromARGB(255, 226, 183, 20),
-                      decoration: widget.task.isCompleted
-                          ? TextDecoration.lineThrough
-                          : TextDecoration.none,
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width - 90,
+                    child: Text(
+                      widget.task.title,
+                      style: TextStyle(
+                        fontFamily: 'JetBrainsMono',
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                        color: (widget.task.isCompleted)
+                            ? const Color.fromARGB(255, 100, 102, 105)
+                            : const Color.fromARGB(255, 226, 183, 20),
+                        decoration: widget.task.isCompleted
+                            ? TextDecoration.lineThrough
+                            : TextDecoration.none,
+                      ),
                     ),
                   ),
                 ],
