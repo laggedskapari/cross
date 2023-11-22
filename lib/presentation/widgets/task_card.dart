@@ -31,8 +31,10 @@ class _TaskCardState extends ConsumerState<TaskCard> {
             child: GestureDetector(
               onLongPress: () {
                 setState(() {
-                  if(!widget.task.isCompleted){
-                    widget.task.isImportant = !widget.task.isImportant;
+                  if (!widget.task.isCompleted) {
+                    ref
+                        .read(tasksProvider.notifier)
+                        .togglePriority(widget.task.id);
                     HapticFeedback.vibrate();
                   }
                 });
@@ -71,7 +73,9 @@ class _TaskCardState extends ConsumerState<TaskCard> {
                               : Icons.double_arrow,
                       color: (widget.task.isCompleted)
                           ? const Color.fromARGB(255, 100, 102, 105)
-                          : const Color.fromARGB(255, 226, 183, 20),
+                          : (widget.task.isImportant)
+                              ? const Color.fromARGB(255, 226, 183, 20)
+                              : const Color.fromARGB(150, 226, 183, 20),
                     ),
                   ),
                   SizedBox(
@@ -84,7 +88,9 @@ class _TaskCardState extends ConsumerState<TaskCard> {
                         fontWeight: FontWeight.w700,
                         color: (widget.task.isCompleted)
                             ? const Color.fromARGB(255, 100, 102, 105)
-                            : const Color.fromARGB(255, 226, 183, 20),
+                            : (widget.task.isImportant)
+                                ? const Color.fromARGB(255, 226, 183, 20)
+                                : const Color.fromARGB(150, 226, 183, 20),
                         decoration: widget.task.isCompleted
                             ? TextDecoration.lineThrough
                             : TextDecoration.none,

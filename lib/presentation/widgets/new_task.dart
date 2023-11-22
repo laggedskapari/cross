@@ -6,10 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class NewTask extends ConsumerStatefulWidget {
   const NewTask({
     super.key,
-    required this.isVisible,
   });
 
-  final bool isVisible;
 
   @override
   ConsumerState<NewTask> createState() => _NewTaskState();
@@ -48,68 +46,65 @@ class _NewTaskState extends ConsumerState<NewTask> {
       });
     }
 
-    return Visibility(
-      visible: widget.isVisible,
-      child: Column(
-        children: [
-          Visibility(
-            visible: _showErrorText,
-            child: Container(
-              margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.secondary,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Text(
-                '//TITLE NOT FOUND!',
-                style: TextStyle(
-                    color: Theme.of(context).colorScheme.error,
-                    fontWeight: FontWeight.w900,
-                    fontFamily: 'JetBrainsMono'),
-              ),
+    return Column(
+      children: [
+        Visibility(
+          visible: _showErrorText,
+          child: Container(
+            margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.secondary,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Text(
+              '//TITLE NOT FOUND!',
+              style: TextStyle(
+                  color: Theme.of(context).colorScheme.error,
+                  fontWeight: FontWeight.w900,
+                  fontFamily: 'JetBrainsMono'),
             ),
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            margin: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-            decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 44, 46, 49),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    margin: const EdgeInsets.fromLTRB(0, 5, 5, 0),
-                    child: TextField(
-                      maxLines: 1,
-                      maxLength: 30,
-                      controller: _titleController,
-                      style: Theme.of(context).textTheme.bodySmall,
-                      decoration: InputDecoration(
-                        counter: const Offstage(),
-                        hintText: '//TITLE',
-                        hintStyle: Theme.of(context).textTheme.labelLarge,
-                        border: InputBorder.none,
-                      ),
+        ),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          margin: const EdgeInsets.fromLTRB(10, 0, 10, 20),
+          decoration: BoxDecoration(
+            color: const Color.fromARGB(255, 44, 46, 49),
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: Container(
+                  margin: const EdgeInsets.fromLTRB(0, 5, 5, 0),
+                  child: TextField(
+                    maxLines: 1,
+                    maxLength: 30,
+                    controller: _titleController,
+                    style: Theme.of(context).textTheme.bodySmall,
+                    decoration: InputDecoration(
+                      counter: const Offstage(),
+                      hintText: '//TITLE',
+                      hintStyle: Theme.of(context).textTheme.labelLarge,
+                      border: InputBorder.none,
                     ),
                   ),
                 ),
-                Container(
-                  margin: const EdgeInsets.fromLTRB(0, 0, 5, 0),
-                  child: IconButton(
-                    onPressed: submitNewTask,
-                    icon: const Icon(Icons.check),
-                    splashRadius: 1,
-                    color: const Color.fromARGB(255, 100, 102, 105),
-                  ),
+              ),
+              Container(
+                margin: const EdgeInsets.fromLTRB(0, 0, 5, 0),
+                child: IconButton(
+                  onPressed: submitNewTask,
+                  icon: const Icon(Icons.check),
+                  splashRadius: 1,
+                  color: const Color.fromARGB(255, 100, 102, 105),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

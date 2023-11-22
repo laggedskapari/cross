@@ -33,4 +33,8 @@ class LocalDatabaseUseCaseImplementation extends LocalDatabaseUseCase {
     return localDatabaseRepository.unCrossTask(id);
   }
 
+  @override
+  Future<void> togglePriority(String id) {
+    return localDatabaseRepository.togglePriority(id);
+  }
 }

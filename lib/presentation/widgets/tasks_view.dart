@@ -10,11 +10,9 @@ class TaskView extends ConsumerWidget {
   const TaskView({
     super.key,
     required this.registeredTasks,
-    required this.isNewTaskVisible,
   });
 
   final List<Task> registeredTasks;
-  final bool isNewTaskVisible;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -25,12 +23,10 @@ class TaskView extends ConsumerWidget {
         Expanded(
           child: ListView.builder(
             itemBuilder: (context, index) => Dismissible(
-              key: Key(registeredTasks[index].id),
+              key: UniqueKey(),
               direction: DismissDirection.endToStart,
               onDismissed: (DismissDirection endToStart) {
-                ref
-                    .watch(tasksProvider.notifier)
-                    .deleteTask(registeredTasks[index].id);
+                ref.read(tasksProvider.notifier).deleteTask(registeredTasks[index].id);
               },
               background: const Icon(
                 Icons.delete,
@@ -49,9 +45,7 @@ class TaskView extends ConsumerWidget {
             itemCount: registeredTasks.length,
           ),
         ),
-        NewTask(
-          isVisible: isNewTaskVisible,
-        ),
+        const NewTask(),
       ],
     );
   }

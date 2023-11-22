@@ -67,6 +67,18 @@ class LocalDatabaseRepositoryImplementation extends LocalDatabaseRepo {
   }
 
   @override
+  Future<void> togglePriority(String id) async {
+    final Isar isar = await db;
+    await isar.writeTxn(() async {
+      final Task? task = await isar.tasks.filter().idEqualTo(id).findFirst();
+      if(task != null){
+        task.isImportant = !task.isImportant;
+        await isar.tasks.put(task);
+      }
+    });
+  }
+
+  @override
   Future<List<Task>> loadTasks() async {
     final Isar isar = await db;
     final tasks = await isar.tasks.where(sort: Sort.desc).anyIsarId().findAll();

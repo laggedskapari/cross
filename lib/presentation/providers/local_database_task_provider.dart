@@ -29,6 +29,11 @@ class TaskNotifier extends StateNotifier<List<Task>> {
     state = await localDatabaseUseCase.loadTasks();
   }
 
+  Future<void> togglePriority(String id) async {
+    await localDatabaseUseCase.togglePriority(id);
+    state = await localDatabaseUseCase.loadTasks();
+  }
+
   Future<void> loadTasks() async {
     state = await localDatabaseUseCase.loadTasks();
   }

@@ -1,7 +1,7 @@
+import 'package:cross/domain/entities/task.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:cross/presentation/widgets/utility_belt.dart';
 import 'package:cross/presentation/widgets/cross_app_bar.dart';
 import 'package:cross/presentation/widgets/tasks_view.dart';
 import 'package:cross/presentation/providers/providers.dart';
@@ -23,13 +23,6 @@ class _CrossState extends ConsumerState<Cross> {
   }
 
 
-  //Handles the visibility of the new task widget.
-  void _toggleNewTaskVisible() {
-    setState(() {
-      isNewTaskVisible = !isNewTaskVisible;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
 
@@ -40,11 +33,6 @@ class _CrossState extends ConsumerState<Cross> {
       appBar: const CrossAppBar(),
       body: TaskView(
         registeredTasks: allRegisteredTasks,
-        isNewTaskVisible: isNewTaskVisible,
-      ),
-      bottomNavigationBar: UtilityBelt(
-        toggleNewTask: _toggleNewTaskVisible,
-        isNewTaskVisible: isNewTaskVisible,
       ),
     );
   }
