@@ -7,4 +7,5 @@ abstract class LocalDatabaseRepo {
   Future<void> crossTask(String id);
   Future<void> unCrossTask(String id);
   Future<void> togglePriority(String id);
+  Future<void> clearAllTasks();
 }

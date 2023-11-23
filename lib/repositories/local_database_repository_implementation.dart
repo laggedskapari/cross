@@ -79,6 +79,14 @@ class LocalDatabaseRepositoryImplementation extends LocalDatabaseRepo {
   }
 
   @override
+  Future<void> clearAllTasks() async {
+    final Isar isar = await db;
+    await isar.writeTxn(() async {
+      await isar.tasks.where(sort: Sort.desc).anyIsarId().deleteAll();
+    });
+  }
+
+  @override
   Future<List<Task>> loadTasks() async {
     final Isar isar = await db;
     final tasks = await isar.tasks.where(sort: Sort.desc).anyIsarId().findAll();

@@ -34,6 +34,11 @@ class TaskNotifier extends StateNotifier<List<Task>> {
     state = await localDatabaseUseCase.loadTasks();
   }
 
+  Future<void> clearAllTasks() async {
+    await localDatabaseUseCase.clearAllTasks();
+    state = await localDatabaseUseCase.loadTasks();
+  }
+
   Future<void> loadTasks() async {
     state = await localDatabaseUseCase.loadTasks();
   }

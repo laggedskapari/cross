@@ -37,4 +37,9 @@ class LocalDatabaseUseCaseImplementation extends LocalDatabaseUseCase {
   Future<void> togglePriority(String id) {
     return localDatabaseRepository.togglePriority(id);
   }
+
+  @override
+  Future<void> clearAllTasks() {
+    return localDatabaseRepository.clearAllTasks();
+  }
 }

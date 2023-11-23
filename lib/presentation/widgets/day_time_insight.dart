@@ -1,15 +1,17 @@
 import 'dart:async';
+import 'package:cross/presentation/providers/local_database_task_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-class DayTimeInsight extends  StatefulWidget {
+class DayTimeInsight extends  ConsumerStatefulWidget {
   const DayTimeInsight({super.key});
 
   @override
-  State<DayTimeInsight> createState() => _DayTimeInsightState();
+  ConsumerState<DayTimeInsight> createState() => _DayTimeInsightState();
 }
 
-class _DayTimeInsightState extends State<DayTimeInsight> {
+class _DayTimeInsightState extends ConsumerState<DayTimeInsight> {
   late Timer timer;
   late DateTime _endTime;
   double _percentComplete = 0.0;
@@ -25,6 +27,7 @@ class _DayTimeInsightState extends State<DayTimeInsight> {
     timer = Timer.periodic(oneSec, (timer) {
       DateTime now = DateTime.now();
       if (now.isAfter(_endTime)) {
+        ref.read(tasksProvider.notifier).clearAllTasks();
         _resetTimer();
       } else {
         Duration remaining = _endTime.difference(now);
